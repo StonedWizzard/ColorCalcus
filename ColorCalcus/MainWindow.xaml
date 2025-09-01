@@ -13,11 +13,24 @@
 
     <DockPanel>
         <ToolBar DockPanel.Dock="Top" Padding="5" Background="#EEE" FontSize="14" FontWeight="Bold" FontFamily="Carlito">
-            <Button Content="➕ Добавить шаг" Margin="2" Click="BtnAddStep_Click"/>
-            <Button Content="➖ Убрать шаг" Margin="2" Click="BtnRemoveStep_Click"/>
-            
+            <Button Content="➕ Шаг" Margin="2" Click="BtnAddStep_Click">
+                <Button.ToolTip>
+                    <ToolTip Content="Добавить обычный шаг (выкрас)" />
+                </Button.ToolTip>
+            </Button>
+            <Button Content="💧 Долив" Margin="2" Click="BtnAddRefillStep_Click">
+                <Button.ToolTip>
+                    <ToolTip Content="Добавить шаг долива краски" />
+                </Button.ToolTip>
+            </Button>
+            <Button Content="➖ Шаг" Margin="2" Click="BtnRemoveStep_Click" Foreground="#FFC61515">
+                <Button.ToolTip>
+                    <ToolTip Content="Удалить последний шаг/долив"/>
+                </Button.ToolTip>
+            </Button>
+
             <Separator Margin="10, 0"/>
-            <Label Content="Вычитать на выкрас:" VerticalAlignment="Center"/>
+            <Label Content="выкрас / долив:" VerticalAlignment="Center"/>
             <xctk:DoubleUpDown x:Name="StepDecreaseValueBox" CultureInfo="{x:Static sys:CultureInfo.InvariantCulture}"
                 Width="80" Margin="5" Value="0.0" Increment="1" Minimum="0" FormatString="0.00"/>
 

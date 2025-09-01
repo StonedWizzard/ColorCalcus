@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ColorCalcus.CalcData;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -28,6 +29,16 @@ namespace ColorCalcus
             else Controller.AddNewStep();
             StepDecreaseValueBox.Value = 0.0;
         }
+        private void BtnAddRefillStep_Click(object s, RoutedEventArgs e)
+        {
+            if(Controller.HasSpecialStep(StepType.Refill)) return;
+
+            if (StepDecreaseValueBox.Value.HasValue)
+                Controller.AddNewStep(StepDecreaseValueBox.Value.Value, StepType.Refill);
+            else Controller.AddNewStep(stepType: StepType.Refill);
+            StepDecreaseValueBox.Value = 0.0;
+        }
+
         private void BtnRemoveStep_Click(object s, RoutedEventArgs e) => Controller.RemoveLastStep();
         private void BtnAddColor_Click(object s, RoutedEventArgs e) => Controller.AddNewColor();
         private void BtnRemoveColor_Click(object s, RoutedEventArgs e) => Controller.RemoveSelectedColor();

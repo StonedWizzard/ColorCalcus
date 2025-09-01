@@ -15,17 +15,21 @@ namespace ColorCalcus.CalcData
             //AddStep(0);
         }
        
-        public StepInfo AddStep(double paintDecrease = 1.0)
+        public StepInfo AddStep(double paintDecrease = 1.0, StepType type = StepType.Default)
         {
+            if (HasSpecialStep(type)) return null;
+
             var step = new StepInfo
             {
+                Type = type,
                 Index = Steps.Count,
-                ColoringDecreaseValue = paintDecrease
+                StepValue = paintDecrease
             };
             Steps.Add(step);
 
             foreach (var color in Colors)
                 color.StepResults.Add(new StepResult { Step = step, Color = color });
+            ReindexSteps();
             return step;
         }
 
@@ -77,14 +81,25 @@ namespace ColorCalcus.CalcData
 
         public void ReindexSteps()
         {
-            for (int i = 0; i < Steps.Count; i++)
-                Steps[i].Index = i;
+            int idx = 0;
+
+            foreach (var step in Steps.Where(s => s.Type == StepType.Default))
+                step.Index = idx++;
+
+            foreach (var step in Steps.Where(s => s.Type != StepType.Default))
+                step.Index = idx++;
         }
 
         public void ReindexAll()
         {
             ReindexColors();
             ReindexSteps();
+        }
+
+        public bool HasSpecialStep(StepType stepType)
+        {
+            if(stepType == StepType.Default) return false;
+            return Steps.FirstOrDefault(s => s.Type == stepType) != null;
         }
     }
 }
